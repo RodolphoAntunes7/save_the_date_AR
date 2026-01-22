@@ -1,30 +1,44 @@
-<main class="landing-container">
+<main class="landing-container" (click)="iniciarConvite()">
   
+  <audio #musica loop>
+    <source src="assets/audio/livre-pra-voar.mp3" type="audio/mpeg">
+  </audio>
+
+  <button 
+    *ngIf="isOpened()" 
+    class="audio-control-floating" 
+    (click)="toggleMute()" 
+    [class.muted]="isMuted()">
+    <span class="icon">{{ isMuted() ? '🔇' : '🔊' }}</span>
+  </button>
+
   <div class="layer-background">
     <picture>
-      <source media="(max-width: 1024px)" srcset="/assets/images/background-mobile.webp">
-      <img src="/assets/images/background-desktop.webp" alt="Ana Carolina e Rodolpho" class="bg-image">
+      <source media="(max-width: 1024px)" srcset="assets/images/background-mobile.webp">
+      <img src="assets/images/background-desktop.webp" alt="Ana Carolina e Rodolpho" class="bg-image">
     </picture>
-    <div class="shadow-overlay" [class.active]="stage() !== 'loading'"></div>
+    <div class="shadow-overlay" [class.active]="isOpened()"></div>
   </div>
 
-  <div class="layer-mask" [class.fade-out]="stage() !== 'loading'">
-    <picture>
-      <source media="(max-width: 768px)" srcset="/assets/images/save-the-date-mobile-black.png">
-      <img src="/assets/images/save-the-date-desktop-black.png" alt="Save the Date">
+  <div class="layer-mask" [class.fade-out]="isOpened()">
+    <picture class="mask-picture">
+      <source media="(max-width: 768px)" srcset="assets/images/save-the-date-mobile-black.png">
+      <img src="assets/images/save-the-date-desktop-black.png" alt="Save the Date" class="mask-image">
     </picture>
+    
+    <div class="click-reminder" [class.visible]="showReminder() && !isOpened()">
+      CLIQUE PARA CONTINUAR
+    </div>
   </div>
 
-  <div class="layer-content">
+  <div class="layer-content" *ngIf="isOpened()">
     
     <div class="top-section">
-      
       <div class="logo-block element" [class.visible]="isVisible('show-logo')">
-         <img src="/assets/images/logo-casal-blue.png" alt="Monograma AR">
+         <img src="assets/images/logo-casal-blue.png" alt="Monograma AR">
       </div>
 
       <div class="countdown-header element" [class.visible]="isVisible('show-countdown')">
-        
         <div class="time-unit">
           <span class="value">{{ timeLeft().days }}</span>
           <span class="label">dias</span>
@@ -41,15 +55,12 @@
           <span class="value">{{ timeLeft().minutes }}</span>
           <span class="label">min</span>
         </div>
-
       </div>
-
     </div>
 
     <div class="spacer"></div>
 
     <div class="bottom-section">
-      
       <div class="names-block element" [class.visible]="isVisible('show-names')">
         <p>
           <span>Ana Carolina</span>
@@ -81,6 +92,6 @@
       </div>
       
     </div>
-
   </div>
+
 </main>

@@ -7,8 +7,6 @@ import { LandingComponent } from './landing/landing.component';
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, LandingComponent],
-  // CORREÇÃO AQUI:
-  // Em vez de 'templateUrl', usamos 'template' direto.
   template: `<app-landing></app-landing>`, 
   styles: [] 
 })

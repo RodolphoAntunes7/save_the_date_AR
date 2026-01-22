@@ -1,7 +1,6 @@
-import { Component, signal, computed, OnInit, OnDestroy, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, signal, computed, OnInit, OnDestroy, PLATFORM_ID, Inject, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 
-// 1. Definimos a ordem exata da Linha do Tempo
 type AnimationStage = 'loading' | 'reveal' | 'show-names' | 'show-logo' | 'show-date' | 'show-countdown';
 
 @Component({
@@ -12,14 +11,15 @@ type AnimationStage = 'loading' | 'reveal' | 'show-names' | 'show-logo' | 'show-
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent implements OnInit, OnDestroy {
-  stage = signal<AnimationStage>('loading');
+  @ViewChild('musica') audioRef!: ElementRef<HTMLAudioElement>;
   
-  // Data atualizada para 11 de Julho
+  stage = signal<AnimationStage>('loading');
+  isOpened = signal(false);
+  
   private readonly targetDate = new Date('2026-07-11T16:00:00');
   private intervalId: any;
-
   now = signal(new Date());
-  
+
   timeLeft = computed(() => {
     const diff = this.targetDate.getTime() - this.now().getTime();
     if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
@@ -33,15 +33,25 @@ export class LandingComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
+  showReminder = signal(false);
+  private reminderTimeout: any;
+
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.startAnimationSequence();
       this.startTimer();
+      
+      // Inicia o contador de 3 segundos para mostrar o aviso
+      this.reminderTimeout = setTimeout(() => {
+        if (!this.isOpened()) {
+          this.showReminder.set(true);
+        }
+      }, 3000);
     }
   }
 
   ngOnDestroy(): void {
     if (this.intervalId) clearInterval(this.intervalId);
+    if (this.reminderTimeout) clearTimeout(this.reminderTimeout);
   }
 
   private startTimer() {
@@ -50,38 +60,47 @@ export class LandingComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  private startAnimationSequence() {
-    // A NOVA COREOGRAFIA (TIMELINE)
-    
-    // 0s: Tela preta (Loading)
-    
-    // 2.5s: Fundo aparece (Sai o PNG preto)
-    setTimeout(() => this.stage.set('reveal'), 2500); 
+  isMuted = signal(false); // Controle do estado do som
 
-    // 3.5s: 1º NOMES
-    setTimeout(() => this.stage.set('show-names'), 3500);
-
-    // 4.5s: 2º LOGO
-    setTimeout(() => this.stage.set('show-logo'), 4500);
-    
-    // 5.5s: 3º DATA
-    setTimeout(() => this.stage.set('show-date'), 5500);
-
-    // 6.5s: 4º CRONÔMETRO (Fim)
-    setTimeout(() => this.stage.set('show-countdown'), 6500);
+  toggleMute() {
+    if (this.audioRef) {
+      const audio = this.audioRef.nativeElement;
+      this.isMuted.set(!this.isMuted());
+      audio.muted = this.isMuted();
+    }
   }
-  
-  // Lógica auxiliar para saber se o elemento já deve estar na tela
+
+  iniciarConvite() {
+    if (this.isOpened()) return; // Evita disparar múltiplos cliques
+    
+    this.isOpened.set(true);
+    this.showReminder.set(false);
+    
+    if (this.reminderTimeout) {
+      clearTimeout(this.reminderTimeout);
+    }
+    
+    if (this.audioRef) {
+      const audio = this.audioRef.nativeElement;
+      audio.currentTime = 17; 
+      audio.volume = 0.5;
+      audio.play().catch(e => console.error("Erro áudio:", e));
+    }
+    
+    this.startAnimationSequence();
+  }
+
+  private startAnimationSequence() {
+    // Escadinha de aparição (Timeline)
+    setTimeout(() => this.stage.set('reveal'), 500); 
+    setTimeout(() => this.stage.set('show-names'), 1500);
+    setTimeout(() => this.stage.set('show-logo'), 2500);
+    setTimeout(() => this.stage.set('show-date'), 3500);
+    setTimeout(() => this.stage.set('show-countdown'), 4500);
+  }
+
   isVisible(minStage: AnimationStage): boolean {
-    const order: AnimationStage[] = [
-      'loading', 
-      'reveal', 
-      'show-names',     // 1
-      'show-logo',      // 2
-      'show-date',      // 3
-      'show-countdown'  // 4
-    ];
-    // Se o estágio atual for maior ou igual ao estágio mínimo exigido, mostra o elemento
+    const order: AnimationStage[] = ['loading', 'reveal', 'show-names', 'show-logo', 'show-date', 'show-countdown'];
     return order.indexOf(this.stage()) >= order.indexOf(minStage);
   }
 }
