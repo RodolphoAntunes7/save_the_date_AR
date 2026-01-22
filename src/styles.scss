@@ -1,0 +1,29 @@
+/* src/styles.scss */
+
+// Use ./ para garantir que ele procure na pasta styles vizinha
+@import './styles/variables';
+@import './styles/reset';
+
+// 1. Configuração da Raiz
+html {
+  height: 100%; // Força a altura
+  overflow: hidden; // Proíbe rolagem
+}
+
+// 2. Configuração do Corpo
+body {
+  height: 100%; // Força a altura
+  margin: 0; // Remove borda branca
+  padding: 0;
+  background-color: black; // SEGURO: Fundo preto se tudo falhar
+  overflow: hidden;
+  position: fixed; 
+  width: 100%;
+}
+
+// 3. Configuração do Angular App
+app-root {
+  display: block; // Importante! Tags customizadas não têm display padrão
+  height: 100%; // Ocupa todo o body
+  width: 100%;
+}

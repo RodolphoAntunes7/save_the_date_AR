@@ -1,0 +1,91 @@
+/* ==========================================================================
+   MODERN SPA RESET - Wedding Save the Date
+   Focado em: Mobile First, Tipografia Nítida e Full Viewport
+   ========================================================================== */
+
+// 1. Box Sizing Global
+// Garante que paddings e bordas não aumentem o tamanho dos elementos.
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// 2. Configuração do Documento
+html {
+  // Impede que o texto aumente automaticamente ao girar o celular (iOS)
+  -webkit-text-size-adjust: 100%; 
+  
+  // Rolagem suave nativa
+  scroll-behavior: smooth; 
+  
+  // Remove o "flash" azul padrão ao tocar em elementos no Mobile
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  // Previne rolagem horizontal acidental causada por animações
+  overflow-x: hidden; 
+}
+
+// 3. Otimização de Tipografia
+body {
+  // Herança de fonte padrão
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  
+  // A Mágica do Design: Fontes mais finas e nítidas (Antialiasing)
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  // Otimiza a renderização de texto para legibilidade
+  text-rendering: optimizeLegibility;
+}
+
+// 4. Mídia Responsiva (Imagens e Vetores)
+// Remove o espaço em branco irritante abaixo de imagens inline e garante responsividade
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto; // Mantém a proporção
+}
+
+// 5. Controles de UI (Botões e Inputs)
+// Remove estilos nativos feios dos browsers para podermos customizar 100%
+button, input, textarea, select {
+  font: inherit; // Herda a fonte do projeto, não a do sistema
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation; // Melhora resposta ao toque
+}
+
+// 6. Acessibilidade (Utilitário)
+// Para esconder elementos visualmente, mas mantê-los para leitores de tela
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// 7. Angular Specific
+// Garante que o componente raiz não atrapalhe o layout full-height
+app-root {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

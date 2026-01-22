@@ -1,0 +1,69 @@
+/* ==========================================================================
+   DESIGN TOKENS & VARIABLES
+   Project: Save the Date (Ana & Rodolpho)
+   ========================================================================== */
+
+// --------------------------------------------------------------------------
+// 1. PALETA DE CORES (Raw Colors)
+// --------------------------------------------------------------------------
+// Cores extraídas da identidade visual do casamento
+$color-navy-blue:   #3D516A; // Azul Profundo
+$color-straw:       #EBDEC6; // Palha / Creme
+$color-serenity:    #B3CEE5; // Azul Serenity (para detalhes sutis)
+$color-white:       #FFFFFF;
+$color-black:       #000000;
+
+// --------------------------------------------------------------------------
+// 2. CORES SEMÂNTICAS (Usage)
+// --------------------------------------------------------------------------
+// Use estas variáveis nos componentes, não as cores raw.
+
+// Backgrounds
+$bg-color-main:     $color-white; // Fundo da página/máscara
+$bg-overlay-dark:   rgba($color-black, 0.65); // Sombra sobre a foto
+
+// Tipografia
+$text-color-primary: $color-straw; // Títulos e destaques sobre fundo escuro
+$text-color-base:    $color-white; // Texto comum sobre fundo escuro
+$text-color-dark:    $color-navy-blue; // Texto sobre fundo claro (se houver)
+
+// Elementos de UI
+$ui-accent:          $color-serenity;
+$ui-border-radius:   8px;
+
+// --------------------------------------------------------------------------
+// 3. TIPOGRAFIA
+// --------------------------------------------------------------------------
+// Definiremos as fontes aqui, mas lembre-se de importá-las no index.html
+
+// Fonte para Nomes e Títulos (Ex: Great Vibes, Playfair Display)
+$font-family-display: 'Pinyon Script', cursive; 
+
+// Fonte para Informações e Cronômetro (Ex: Montserrat, Lato)
+$font-family-body:    'Playfair Display', serif;
+
+$font-weight-regular: 400;
+$font-weight-bold:    700;
+
+// --------------------------------------------------------------------------
+// 4. CAMADAS (Z-INDEX STRATEGY)
+// --------------------------------------------------------------------------
+// Centralizamos aqui para evitar "guerras de z-index" (9999 vs 99999)
+$z-index-background:  0;
+$z-index-overlay:     5;
+$z-index-mask:        10; // A máscara PNG "vazada"
+$z-index-content:     20; // Textos e logos interativos
+
+// --------------------------------------------------------------------------
+// 5. TRANSIÇÕES E ANIMAÇÕES
+// --------------------------------------------------------------------------
+$transition-slow:     1.5s ease-in-out; // Para fade de fundo
+$transition-medium:   0.8s ease-out;    // Para entrada de texto
+$transition-fast:     0.3s ease;        // Para hovers simples
+
+// --------------------------------------------------------------------------
+// 6. BREAKPOINTS (Mobile First)
+// --------------------------------------------------------------------------
+$breakpoint-tablet:   768px;
+$breakpoint-desktop:  1024px;
+$breakpoint-wide:     1440px;

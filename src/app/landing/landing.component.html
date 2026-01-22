@@ -1,0 +1,86 @@
+<main class="landing-container">
+  
+  <div class="layer-background">
+    <picture>
+      <source media="(max-width: 1024px)" srcset="/assets/images/background-mobile.webp">
+      <img src="/assets/images/background-desktop.webp" alt="Ana Carolina e Rodolpho" class="bg-image">
+    </picture>
+    <div class="shadow-overlay" [class.active]="stage() !== 'loading'"></div>
+  </div>
+
+  <div class="layer-mask" [class.fade-out]="stage() !== 'loading'">
+    <picture>
+      <source media="(max-width: 768px)" srcset="/assets/images/save-the-date-mobile-black.png">
+      <img src="/assets/images/save-the-date-desktop-black.png" alt="Save the Date">
+    </picture>
+  </div>
+
+  <div class="layer-content">
+    
+    <div class="top-section">
+      
+      <div class="logo-block element" [class.visible]="isVisible('show-logo')">
+         <img src="/assets/images/logo-casal-blue.png" alt="Monograma AR">
+      </div>
+
+      <div class="countdown-header element" [class.visible]="isVisible('show-countdown')">
+        
+        <div class="time-unit">
+          <span class="value">{{ timeLeft().days }}</span>
+          <span class="label">dias</span>
+        </div>
+        <span class="separator">:</span>
+        
+        <div class="time-unit">
+          <span class="value">{{ timeLeft().hours }}</span>
+          <span class="label">horas</span>
+        </div>
+        <span class="separator">:</span>
+
+        <div class="time-unit">
+          <span class="value">{{ timeLeft().minutes }}</span>
+          <span class="label">min</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="bottom-section">
+      
+      <div class="names-block element" [class.visible]="isVisible('show-names')">
+        <p>
+          <span>Ana Carolina</span>
+          <span class="connector">&</span>
+          <span>Rodolpho</span>
+        </p>
+      </div>
+      
+      <div class="date-block element" [class.visible]="isVisible('show-date')">
+        <span class="month">JULHO</span>
+        
+        <div class="day-row">
+          <div class="side-info">
+            <span class="line"></span>
+            <span class="text">SÁBADO</span>
+            <span class="line"></span>
+          </div>
+          
+          <span class="day-number">11</span>
+          
+          <div class="side-info">
+            <span class="line"></span>
+            <span class="text">ÀS 16H</span>
+            <span class="line"></span>
+          </div>
+        </div>
+
+        <span class="year">2026</span>
+      </div>
+      
+    </div>
+
+  </div>
+</main>
